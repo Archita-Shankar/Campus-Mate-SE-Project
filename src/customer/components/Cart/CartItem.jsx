@@ -2,43 +2,77 @@ import { Button, IconButton } from "@mui/material";
 import React from "react";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useDispatch } from "react-redux";
+import { removeCartItem, updateCartItem } from "../../../State/Cart/Action";
 
-const CartItem = () => {
+const CartItem = ({ item }) => {
+  const dispatch=useDispatch();
+
+  // const handleUpdateCartItem=(num)=>{
+  //   const data= {data:{quantity: item.quantity+num}, cartItemId:item?._id}
+  //   dispatch(updateCartItem(data))
+  // }
+  
+
+  // const handleRemoveCartitem=()=>{
+  //   dispatch(removeCartItem(item._id))
+  // }
+
+  const handleUpdateCartItem = (num) => {
+    const data = { data: { quantity: item.quantity + num }, cartItemId: item?._id };
+    console.log("Update Cart Item Data: ", data); // Debug log
+    dispatch(updateCartItem(data));
+  };
+  
+  const handleRemoveCartItem = () => {
+    console.log("Remove Cart Item ID: ", item._id); // Debug log
+    dispatch(removeCartItem(item._id));
+  };
+
+  
   return (
     <div className="p-5 shadow-lg border rounded-md">
       <div className="flex items-center">
         <div className="w-[5rem] h-[5rem] lg:w-[9rem] lg:h-[9rem]">
           <img
             className="w-full h-full object-cover object-top"
-            src="https://img.freepik.com/premium-photo/woman-stands-front-purple-background-with-picture-flowers_160148-11711.jpg?ga=GA1.1.603994773.1719512123&semt=ais_hybrid"
-            alt=""
+            src={item.product.imageUrl}
+            alt=" "
+
           />
         </div>
 
         <div className="ml-5 space-y-1">
-          <p className="font-semibold">Men Slim Mid Rise Black Jeans</p>
-          <p className="opacity-70">Size L, White</p>
-          <p className="opacity-70 mt-2">Seller: Crishtaliyo 2fashion</p>
+          <p className="font-semibold">{item.product.title}</p>
+          <p className="opacity-70">Size: {item.size}</p>
+          <p className="opacity-70 mt-2">Seller: {item.product.brand}</p>
           <div className="flex space-x-5 items-center text-gray-900 pt-6">
-            <p className="font-semibold">₹199</p>
-            <p className="opacity-50 line-through">₹211</p>
-            <p className="text-green-600 font-semibold">5% Off</p>
+            <p className="font-semibold">₹{item.discountedPrice}</p>
+            <p className="opacity-50 line-through">₹{item.price}</p>
+            <p className="text-green-600 font-semibold">
+              {" "}
+              {Math.round(
+                ((item.price - item.discountedPrice) / item.price) * 100
+              )}
+              % Off
+            </p>
           </div>
         </div>
       </div>
 
       <div className="flex items-center space-x-5 mt-5">
         <div className="flex items-center space-x-4">
-          <IconButton sx={{ color: "rgb(40,38,38)" }}>
+          <IconButton sx={{ color: "rgb(40,38,38)" }} onClick={()=>handleUpdateCartItem(-1)} >
             <RemoveCircleOutlineIcon />
           </IconButton>
-          <span className="py-1 px-3 border rounded-sm">3</span>
-          <IconButton sx={{ color: "rgb(40,38,38)" }}>
+          <span className="py-1 px-3 border rounded-sm">{item.quantity}</span>
+          <IconButton sx={{ color: "rgb(40,38,38)" }} onClick={()=>handleUpdateCartItem(1)} >
             <AddCircleOutlineIcon />
           </IconButton>
         </div>
 
-        <Button sx={{ color: "rgb(173,12,2)" }}>REMOVE</Button>
+        <Button onClick={handleRemoveCartItem}
+        sx={{ color: "rgb(173,12,2)" }}>REMOVE</Button>
       </div>
     </div>
   );

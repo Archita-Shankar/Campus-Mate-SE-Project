@@ -4,6 +4,7 @@ import {
   ADD_ITEM_TO_CART_SUCCESS,
   GET_CART_FAILURE,
   GET_CART_REQUEST,
+  GET_CART_SUCCESS,
   REMOVE_CART_ITEM_FAILURE,
   REMOVE_CART_ITEM_REQUEST,
   REMOVE_CART_ITEM_SUCCESS,
@@ -34,16 +35,23 @@ export const cartReducer = (state = initialState, action) => {
     case GET_CART_REQUEST:
       return {
         ...state,
-        cartItems: action.payload.cartItems,
-        cart: action.payload,
-        loading: false,
+        loading: true,
+        error: null,
       };
+
     case GET_CART_FAILURE:
       return {
         ...state,
-        cartItems: action.payload.cartItems,
-        cart: action.payload,
         loading: false,
+        error: action.payload, // Store the error
+      };
+    case GET_CART_SUCCESS:
+      return {
+        ...state,
+        cart: action.payload || {}, // Ensure cart is at least an empty object
+        cartItems: action.payload?.cartItems || [], // Fallback to an empty array if cartItems is undefined
+        loading: false,
+        error: null,
       };
     case REMOVE_CART_ITEM_REQUEST:
     case UPDATE_CART_ITEM_REQUEST:
@@ -52,18 +60,34 @@ export const cartReducer = (state = initialState, action) => {
         loading: true,
         error: null,
       };
+    // case REMOVE_CART_ITEM_SUCCESS:
+    //   return {
+    //     ...state,
+    //     deleteCartItem: action.payload,
+    //     loading: false,
+    //   };
+    // case UPDATE_CART_ITEM_SUCCESS:
+    //   return {
+    //     ...state,
+    //     updateCartItem: action.payload,
+    //     loading: false,
+    //   };
+
     case REMOVE_CART_ITEM_SUCCESS:
       return {
         ...state,
-        cartItems: state.cartItems.filter((item) => item.id !== action.payload),
+        // cartItems: state.cartItems.filter((item) => item._id !== action.payload),
+        deleteCartItem:action.payload,
         loading: false,
       };
+
     case UPDATE_CART_ITEM_SUCCESS:
       return {
         ...state,
-        cartItems: state.cartItems.map((item) =>
-          item.id === action.payload.id ? action.payload : item
-        ),
+        // cartItems: state.cartItems.map((item) =>
+        //   item._id === action.payload._id ? action.payload : item
+        // ),
+        updatCartItem:action.payload,
         loading: false,
       };
     case REMOVE_CART_ITEM_FAILURE:
@@ -77,3 +101,4 @@ export const cartReducer = (state = initialState, action) => {
       return state;
   }
 };
+

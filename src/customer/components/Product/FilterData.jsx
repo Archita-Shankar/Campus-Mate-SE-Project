@@ -1,5 +1,5 @@
 export const color=[
-    "Wite",
+    "White",
     "Black",
     "Red",
     "Maroon",
@@ -17,11 +17,9 @@ export const filters=[
             {value: "white", label:"White"},
             {value: "red", label:"Red"},
             {value: "beige", label:"Beige"},
-            {value: "blue", label:"White"},
+            {value: "blue", label:"Blue"},
             {value: "brown", label:"Brown"},
-            {value: "green", label:"Green"},
-            {value: "purple", label:"Purple"},
-            {value: "yelllow", label:"Yellow"}
+            {value: "green", label:"Green"}
         ],
     },
     {

@@ -21,7 +21,7 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Avatar, Button, Menu,MenuItem } from "@mui/material";
+import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import { Close } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -32,127 +32,28 @@ import { getUser, logout } from "../../../State/Auth/Action";
 const navigation = {
   categories: [
     {
-      id: 'women',
-      name: 'Clothes',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '/',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
-        },
-        {
-          name: 'Basic Tees',
-          href: '/',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-        },
-      ],
+      id: "thapar_store",
+      name: "Thapar Store",
+      featured: [],
       sections: [
         {
-          id: 'clothing',
-          name: 'Clothing',
+          id: "option",
+          name: "We have",
           items: [
-            { name: 'Tops', id:"top", href: `{women/clothing/tops}` },
-            { name: 'Dresses', id:"women_dress", href: '#' },
-            { name: 'Women Jeans', id: 'women_jeans' },
-            { name: 'Lengha Choli', id: 'lengha_choli' },
-            { name: 'Sweaters', id: 'sweater' },
-            { name: 'T-Shirts', id: 't-shirt' },
-            { name: 'Jackets', id: 'jacket' },
-            { name: 'Gouns', id: 'gouns' },
-            { name: 'Sarees', id: 'saree' },
-            { name: 'Kurtas', id: 'kurtas' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', id: 'watch' },
-            { name: 'Wallets', id: 'wallet' },
-            { name: 'Bags', id: 'bag' },
-            { name: 'Sunglasses', id: 'sunglasse' },
-            { name: 'Hats', id: 'hat' },
-            { name: 'Belts', id: 'belt' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Full Nelson', id: '#' },
-            { name: 'My Way', id: '#' },
-            { name: 'Re-Arranged', id: '#' },
-            { name: 'Counterfeit', id: '#' },
-            { name: 'Significant Other', id: '#' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'men',
-      name: 'Staionary',
-      featured: [
-        {
-          name: 'New Arrivals',
-          id: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
-        },
-        {
-          name: 'Artwork Tees',
-          id: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
-          imageAlt:
-            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Mens Kurtas', id: 'mens_kurta' },
-            { name: 'Shirt', id: 'shirt' },
-            { name: 'Men Jeans', id: 'men_jeans' },
-            { name: 'Sweaters', id: '#' },
-            { name: 'T-Shirts', id: 't-shirt' },
-            { name: 'Jackets', id: '#' },
-            { name: 'Activewear', id: '#' },
-            
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', id: '#' },
-            { name: 'Wallets', id: '#' },
-            { name: 'Bags', id: '#' },
-            { name: 'Sunglasses', id: '#' },
-            { name: 'Hats', id: '#' },
-            { name: 'Belts', id: '#' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Re-Arranged', id: '#' },
-            { name: 'Counterfeit', id: '#' },
-            { name: 'Full Nelson', id: '#' },
-            { name: 'My Way', id: '#' },
+            { name: "Clothes & Staionery", id: "clothes" },
           ],
         },
       ],
     },
   ],
   pages: [
-    { name: 'Shops', id: '/' },
-    { name: 'Contacts', id: '/' },
+    { name: "About Us", id: "/about" },
+    { name: "Shops/Vendors", id: "/shop" },
+    { name: "Faculty and Lab Locations", id: "/labs" },
+    { name: "Upcoming Events by Societies", id: "/events" },
   ],
 };
+
 
 export default function Example() {
   const [open, setOpen] = useState(false);
@@ -162,9 +63,9 @@ export default function Example() {
   const [anchorEl, setAnchorE1] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
-  const {auth}=useSelector(store=>store);
-  const dispatch=useDispatch();
-  const location=useLocation();
+  const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleUserClick = (event) => {
     setAnchorE1(event.currentTarget);
@@ -184,27 +85,31 @@ export default function Example() {
     closeMenu();
   };
 
-  useEffect(()=>{
-    if(jwt){
-      dispatch(getUser(jwt))
-    }
-  },[jwt,auth.jwt])
+  const handlePagesClick = (page, closeMenu) => {
+    navigate(page.id); // Navigate to the page's path
+    closeMenu(); // Close the menu if necessary
+  };
 
-  useEffect(()=>{
-    if(auth.user){
-      handleClose()
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
     }
-    if(location.pathname==="/login"|| location.pathname==="/register"){
-      navigate(-1)
+  }, [jwt, auth.jwt]);
+
+  useEffect(() => {
+    if (auth.user) {
+      handleClose();
     }
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      navigate(-1);
+    }
+  }, [auth.user]);
 
-  }, [auth.user])
-
-  const handleLogout=()=>{
-    dispatch(logout())
-    handleCloseUserMenu()
+  const handleLogout = () => {
+    dispatch(logout());
+    handleCloseUserMenu();
     localStorage.clear();
-  }
+  };
 
   return (
     <div className="bg-white">
@@ -360,8 +265,9 @@ export default function Example() {
 
       <header className="relative bg-white z-50">
         <p className="flex h-10 items-center justify-center bg-red-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-        <span className="inline-block animate-marquee whitespace-nowrap">
-          Welcome to CAMPUS MATE !! YOUR COLLEGE MATE !! </span>
+          <span className="inline-block animate-marquee whitespace-nowrap">
+            Welcome to CAMPUS MATE !! YOUR COLLEGE MATE !!{" "}
+          </span>
         </p>
 
         <nav
@@ -382,7 +288,7 @@ export default function Example() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <a href="http://localhost:3000/">
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
@@ -404,101 +310,110 @@ export default function Example() {
                             <span className="absolute inset-x-0 -bottom-px h-0.5 transition ease-out duration-200 ${open ? 'bg-indigo-600' : 'bg-transparent'}" />
                           </PopoverButton>
 
-                          <PopoverPanel className="absolute inset-x-0 top-full text-sm text-gray-500">
-                            {/* Flyout content */}
-                            <div
-                              className="absolute inset-0 top-1/2 bg-white shadow"
-                              aria-hidden="true"
-                            />
+                          {
+                            <PopoverPanel className="absolute inset-x-0 top-full text-sm text-gray-500">
+                              {/* Flyout content */}
+                              <div
+                                className="absolute inset-0 top-1/2 bg-white shadow"
+                                aria-hidden="true"
+                              />
 
-                            <div className="relative bg-white">
-                              <div className="mx-auto max-w-7xl px-8">
-                                <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
-                                  <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                    {category.featured.map((item) => (
-                                      <div
-                                        key={item.name}
-                                        className="group relative text-base sm:text-sm"
-                                      >
-                                        <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                                          <img
-                                            src={item.imageSrc}
-                                            alt={item.imageAlt}
-                                            className="object-cover object-center"
-                                          />
-                                        </div>
-                                        <a
-                                          href={item.href}
-                                          className="mt-6 block font-medium text-gray-900"
+                              <div className="relative bg-white">
+                                <div className="mx-auto max-w-7xl px-8">
+                                  <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
+                                    <div className="col-start-2 grid grid-cols-2 gap-x-8">
+                                      {category.featured.map((item) => (
+                                        <div
+                                          key={item.name}
+                                          className="group relative text-base sm:text-sm"
                                         >
-                                          <span
-                                            className="absolute inset-0 z-10"
+                                          <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                                            <img
+                                              src={item.imageSrc}
+                                              alt={item.imageAlt}
+                                              className="object-cover object-center"
+                                            />
+                                          </div>
+                                          <a
+                                            href={item.href}
+                                            className="mt-6 block font-medium text-gray-900"
+                                          >
+                                            <span
+                                              className="absolute inset-0 z-10"
+                                              aria-hidden="true"
+                                            />
+                                            {item.name}
+                                          </a>
+                                          <p
                                             aria-hidden="true"
-                                          />
-                                          {item.name}
-                                        </a>
-                                        <p aria-hidden="true" className="mt-1">
-                                          Shop now
-                                        </p>
-                                      </div>
-                                    ))}
-                                  </div>
-                                  <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                                    {category.sections.map((section) => (
-                                      <div key={section.name}>
-                                        <p
-                                          id={`${section.name}-heading`}
-                                          className="font-medium text-gray-900"
-                                        >
-                                          {section.name}
-                                        </p>
-                                        <ul
-                                          aria-labelledby={`${section.name}-heading`}
-                                          className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                        >
-                                          {section.items.map((item) => (
-                                            <li
-                                              key={item.name}
-                                              className="flex"
-                                            >
-                                              <a
-                                                href={item.href}
-                                                className="hover:text-gray-800"
-                                                onClick={() =>
-                                                  handleCategoryClick(
-                                                    category,
-                                                    section,
-                                                    item,
-                                                    close
-                                                  )
-                                                }
+                                            className="mt-1"
+                                          >
+                                            Shop now
+                                          </p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                    <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
+                                      {category.sections.map((section) => (
+                                        <div key={section.name}>
+                                          <p
+                                            id={`${section.name}-heading`}
+                                            className="font-medium text-gray-900"
+                                          >
+                                            {section.name}
+                                          </p>
+                                          <ul
+                                            aria-labelledby={`${section.name}-heading`}
+                                            className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                          >
+                                            {section.items.map((item) => (
+                                              <li
+                                                key={item.name}
+                                                className="flex"
                                               >
-                                                {item.name}
-                                              </a>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    ))}
+                                                <a
+                                                  href={item.href}
+                                                  className="hover:text-gray-800"
+                                                  onClick={() =>
+                                                    handleCategoryClick(
+                                                      category,
+                                                      section,
+                                                      item,
+                                                      close
+                                                    )
+                                                  }
+                                                >
+                                                  {item.name}
+                                                </a>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        </div>
+                                      ))}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </PopoverPanel>
+                            </PopoverPanel>
+                          }
                         </>
                       )}
                     </Popover>
                   ))}
 
+                  
+
                   {navigation.pages.map((page) => (
-                    <a
+                    <button
                       key={page.name}
-                      href={page.href}
+                      onClick={() => handlePagesClick(page, handleCloseUserMenu)} 
                       className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
-                    </a>
+                    </button>
                   ))}
+
+        
                 </div>
               </PopoverGroup>
 
@@ -513,7 +428,7 @@ export default function Example() {
                         aria-haspopup="true"
                         aria-expanded={openUserMenu ? "true" : undefined}
                         sx={{
-                          bgcolor: "grey-20",
+                          bgcolor: "#E5E4E2",
                           color: "red",
                           cursor: "pointer",
                         }}
@@ -577,7 +492,7 @@ export default function Example() {
         </nav>
       </header>
 
-      <AuthModal handleClose={handleClose} open={openAuthModel}/>
+      <AuthModal handleClose={handleClose} open={openAuthModel} />
     </div>
   );
 }
