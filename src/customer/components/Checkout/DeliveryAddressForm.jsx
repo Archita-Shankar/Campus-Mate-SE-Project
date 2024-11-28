@@ -35,7 +35,7 @@ const DeliveryAddressForm = () => {
             <AddressCard />
 
             <Button
-              sx={{ mt: 2, bgcolor: "blue" }}
+              sx={{ mt: 2, bgcolor: "red" }}
               size="large"
               variant="contained"
             >
@@ -130,7 +130,7 @@ const DeliveryAddressForm = () => {
 
                 <Grid item xs={12}>
                   <Button
-                    sx={{py:1.5, mt: 2, bgcolor: "blue" }}
+                    sx={{py:1.5, mt: 2, bgcolor: "red" }}
                     size="large"
                     variant="contained"
                     type="submit"

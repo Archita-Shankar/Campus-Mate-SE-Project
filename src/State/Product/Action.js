@@ -69,8 +69,6 @@ export const findProducts = (reqData) => async (dispatch) => {
       console.log(`Request URL: /products?${queryParams.toString()}`);
       const { data } = await api.get(`/products?${queryParams.toString()}`);
       console.log("product data", data);
-      console.log('Request parameters:', reqData);
-      console.log("Category:", reqData.category);
 
 
       dispatch({ type: FIND_PRODUCTS_SUCCESS, payload: data });
@@ -80,17 +78,29 @@ export const findProducts = (reqData) => async (dispatch) => {
 };
 
 
-export const findProductsById = (reqData) => async (dispatch) => {
-    dispatch({type:FIND_PRODUCT_BY_ID_REQUEST})
-    const {productId} = reqData;
-    try {
-      const { data } = await api.get(`products/id/${productId}`);
-      console.log("data", data);
+// export const findProductsById = (reqData) => async (dispatch) => {
+//     dispatch({type:FIND_PRODUCT_BY_ID_REQUEST})
+//     const {productId} = reqData;
+//     try {
+//       const { data } = await api.get(`products/id/${productId}`);
+//       console.log("data", data);
   
-      dispatch({ type: FIND_PRODUCT_BY_ID_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: FIND_PRODUCT_BY_ID_FAILURE, payload: error.message });
-    }
-  };
+//       dispatch({ type: FIND_PRODUCT_BY_ID_SUCCESS, payload: data });
+//     } catch (error) {
+//       dispatch({ type: FIND_PRODUCT_BY_ID_FAILURE, payload: error.message });
+//     }
+//   };
 
+export const findProductsById = (productId) => async (dispatch) => {
+  dispatch({ type: FIND_PRODUCT_BY_ID_REQUEST });
+
+  try {
+    const { data } = await api.get(`/products/id/${productId}`);
+    console.log("data", data);
+
+    dispatch({ type: FIND_PRODUCT_BY_ID_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: FIND_PRODUCT_BY_ID_FAILURE, payload: error.message });
+  }
+};
 

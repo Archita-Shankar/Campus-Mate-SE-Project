@@ -10,30 +10,33 @@ import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findProductsById } from "../../../State/Product/Action";
+import { addItemToCart } from "../../../State/Cart/Action";
+import { stationery } from "../../../Data/stationery";
+import { clothes } from "../../../Data/clothes";
 
 const product = {
-  name: "Basic Tee 6-Pack",
+  name: "Coat",
   price: "$192",
   href: "#",
   breadcrumbs: [
-    { id: 1, name: "Men", href: "#" },
+    { id: 1, name: "Clothes", href: "#" },
     { id: 2, name: "Clothing", href: "#" },
   ],
   images: [
     {
-      src: "https://img.freepik.com/premium-photo/attractive-woman-yellow-hat-youth-style-casual-talking-phone-isolated-background_561613-14374.jpg?w=740",
+      src: "https://img.freepik.com/free-photo/doctor-vaccination_23-2147642743.jpg?t=st=1732820008~exp=1732823608~hmac=cc7396606fff5bdacb45a688ba91032cae497c9a67a19c77e7fb5bf1b1f50ddd&w=740",
       alt: "Two each of gray, white, and black shirts laying flat.",
     },
     {
-      src: "https://img.freepik.com/premium-photo/photo-pretty-girl-yellow-hat-youth-style-casual-talking-phone-lifestyle-unaltered_561613-20625.jpg?w=740",
+      src: "https://img.freepik.com/free-photo/doctor-holding-vaccine_23-2147642746.jpg?t=st=1732819998~exp=1732823598~hmac=8dad5d8fe195de47639f98f321b48d0230a9600256ed02220ac53c983dc0fee3&w=740",
       alt: "Model wearing plain black basic tee.",
     },
     {
-      src: "https://img.freepik.com/premium-photo/attractive-woman-yellow-tshirt-hat-summer-style-with-phone-isolated-background_561613-17862.jpg?w=740",
+      src: "https://img.freepik.com/free-photo/happy-doctor-with-vaccination_23-2147642778.jpg?t=st=1732820001~exp=1732823601~hmac=8aaa41afb7cc43e60c31b0074f14f760be0d58e711790cc18318ac3a991fe93c&w=740",
       alt: "Model wearing plain gray basic tee.",
     },
     {
-      src: "https://img.freepik.com/premium-photo/young-beautiful-woman-yellow-tshirt-posing-fashion-panama-lifestyle-unaltered_561613-18692.jpg?w=740",
+      src: "https://img.freepik.com/free-photo/doctor-posing-with-vaccine_23-2147642747.jpg?t=st=1732820006~exp=1732823606~hmac=ade0d79facb5046cdcdb8dfeb0431a8ddc383823ead7a7040bcf34ccff11c819&w=740",
       alt: "Model wearing plain white basic tee.",
     },
   ],
@@ -74,17 +77,25 @@ export default function ProductDetails() {
   const {products}=useSelector(store=>store)
 
   const handleAddToCart=()=>{
+    const data={productId:params.productId, size:selectedSize.name}
+    console.log("data: ", data)
+    dispatch(addItemToCart(data))
     navigate('/cart')
   }
 
   console.log("productid: ", params.productId)
 
+  useEffect(() => {
+    dispatch(findProductsById(params.productId));
+  }, [params.productId]);
 
-  useEffect(()=>{
 
-    dispatch(findProductsById(params.productId))
+  // useEffect(()=>{
 
-  }, [params.productId])
+  //   dispatch(findProductsById(params.productId))
+
+  // }, [params.productId])
+
 
   return (
     <div className="bg-white lg:px-20">
@@ -133,8 +144,8 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem] ">
               <img
-                alt={products.product?.imageUrl}
-                src={product.images[0].src}
+                src={products.product?.imageUrl}
+                alt={product.images[0].alt}
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -163,13 +174,15 @@ export default function ProductDetails() {
               </h1>
             </div>
 
+            {console.log("discountedPercent:", products.product?.discountedPercent)}
+
             {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <div className="flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6">
                  <p className="font-semibold"> {products.product?.discountedPrice}</p>
                  <p className="opacity-50 line-through"> {products.product?.price}</p>
-                 <p className="text-green-600 font-semibold"> {products.product?.discountPercent}% Off</p>
+                 <p className="text-green-600 font-semibold"> {products.product?.discountedPercent}% Off</p>
               </div>
 
               {/* Reviews */}
@@ -374,7 +387,7 @@ export default function ProductDetails() {
         <section className="pt-10">
           <h1 className="py-5 text-xl font-bold">Similar Products</h1>
           <div className="flex flex-wrap space-y-5">
-            {mens_kurta.map((item)=> <HomeSectionCard product={item}/>)}
+            {clothes.map((item)=> <HomeSectionCard product={item}/>)}
           </div>
 
         </section>

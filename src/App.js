@@ -10,6 +10,11 @@ import Checkout from "./customer/components/Checkout/Checkout";
 import Order from "./customer/components/Order/Order";
 import OrderDetails from "./customer/components/Order/OrderDetails";
 import { Route, Routes } from "react-router-dom";
+import { Shop } from "@mui/icons-material";
+import ShopPage from "./customer/ShopPage/ShopPage";
+import Faculty from "./customer/Faculty/faculty";
+import UpcomingEvents from "./customer/UpcomingEvents.jsx/UpcomingEvents";
+import AboutUs from "./customer/components/AboutUs/AboutUs";
 
 function App() {
   return (
@@ -28,9 +33,12 @@ function App() {
         <Route path="/checkout" element={<Checkout/>}></Route>
         <Route path="/account/order" element={<Order/>}></Route>
         <Route path="/account/order/:orderId" element={<OrderDetails/>}></Route>
+        <Route path="/shop" element={<ShopPage />}></Route> 
+        <Route path="/labs" element={<Faculty />}></Route> 
+        <Route path="/events" element={<UpcomingEvents />}></Route> 
+        <Route path="/about" element={<AboutUs />}></Route> 
 
         
-     
         {/* <Order/> */}
         {/* <OrderDetails /> */}
       </Routes>
